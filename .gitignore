@@ -5,3 +5,6 @@ __pycache__/
 .flake8
 .editorconfig
 productivityHub.egg-info/
+.venv/
+.venv
+venv

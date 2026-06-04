@@ -5,7 +5,7 @@ from PIL import Image
 import zipfile
 
 
-def merge_pdf_bytes(pdf_files):
+def merge_pdf_bytes(pdf_files, normalize_a4=False):
     """
     Recebe uma lista de objetos file-like (bytes) de PDFs.
     Retorna os bytes do PDF unificado ou levanta exceção.
@@ -22,7 +22,12 @@ def merge_pdf_bytes(pdf_files):
         merger.write(output_buffer)
         merger.close()
         output_buffer.seek(0)
-        return output_buffer.getvalue()
+        
+        pdf_bytes = output_buffer.getvalue()
+        if normalize_a4:
+            pdf_bytes = normalize_pdf_to_a4(pdf_bytes)
+            
+        return pdf_bytes
     except Exception as e:
         raise Exception(f"Erro na unificação: {str(e)}")
 
@@ -123,7 +128,7 @@ def parse_page_selection(selection_str, max_pages):
     return sorted(list(pages))
 
 
-def extract_pdf_pages(pdf_file, page_selection):
+def extract_pdf_pages(pdf_file, page_selection, normalize_a4=False):
     """
     Extract specific pages from a PDF.
     pdf_file: file-like object or bytes
@@ -149,13 +154,18 @@ def extract_pdf_pages(pdf_file, page_selection):
         output_buffer = io.BytesIO()
         writer.write(output_buffer)
         output_buffer.seek(0)
-        return output_buffer.getvalue()
+        
+        pdf_bytes = output_buffer.getvalue()
+        if normalize_a4:
+            pdf_bytes = normalize_pdf_to_a4(pdf_bytes)
+            
+        return pdf_bytes
 
     except Exception as e:
         raise Exception(f"Erro na extração: {str(e)}")
 
 
-def split_pdf_to_zip(pdf_file, file_name_prefix="pagina"):
+def split_pdf_to_zip(pdf_file, file_name_prefix="pagina", normalize_a4=False):
     """
     Split a PDF into individual pages and return a ZIP file.
     """
@@ -172,10 +182,47 @@ def split_pdf_to_zip(pdf_file, file_name_prefix="pagina"):
                 writer.write(page_buffer)
                 page_buffer.seek(0)
 
-                zipf.writestr(f"{file_name_prefix}_{i+1:03d}.pdf", page_buffer.read())
+                page_content = page_buffer.read()
+                if normalize_a4:
+                    page_content = normalize_pdf_to_a4(page_content)
+
+                zipf.writestr(f"{file_name_prefix}_{i+1:03d}.pdf", page_content)
 
         zip_buffer.seek(0)
         return zip_buffer.getvalue()
 
     except Exception as e:
         raise Exception(f"Erro na divisão: {str(e)}")
+
+
+def normalize_pdf_to_a4(pdf_bytes):
+    """
+    Normaliza todas as páginas de um PDF para o tamanho A4.
+    Preserva a orientação (Retrato/Paisagem).
+    """
+    try:
+        doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+        out_doc = fitz.open()
+
+        # A4 standard: 595 x 842 points
+        a4_w, a4_h = fitz.paper_size("a4")
+
+        for page in doc:
+            p_w = page.rect.width
+            p_h = page.rect.height
+            is_landscape = p_w > p_h
+
+            target_w, target_h = (a4_h, a4_w) if is_landscape else (a4_w, a4_h)
+
+            new_page = out_doc.new_page(width=target_w, height=target_h)
+            # fitz.Rect da nova página
+            target_rect = new_page.rect
+            new_page.show_pdf_page(target_rect, doc, page.number)
+
+        res = out_doc.tobytes()
+        out_doc.close()
+        doc.close()
+        return res
+    except Exception as e:
+        print(f"Erro na normalização A4: {e}")
+        return pdf_bytes  # Fallback: retorna o original em caso de erro crítico

@@ -55,6 +55,14 @@ def render_merge_tab():
         key="pdf_order_editor",
     )
 
+    # Opção de Normalização
+    normalize_a4 = st.checkbox(
+        "Normalizar todas as páginas para A4 📏",
+        value=False,
+        help="Ajusta todas as páginas para o tamanho padrão A4 (210x297mm), preservando a orientação.",
+        key="merge_normalize_a4",
+    )
+
     # Botão de Ação
     if st.button("Unificar PDFs nesta Ordem 🚀", type="primary"):
         # Validação de Unicidade
@@ -74,7 +82,7 @@ def render_merge_tab():
                 ordered_files = [files_map[name] for name in ordered_names]
 
                 # 4. Unificar
-                merged_pdf = merge_pdf_bytes(ordered_files)
+                merged_pdf = merge_pdf_bytes(ordered_files, normalize_a4=normalize_a4)
 
                 st.success("🎉 PDFs unificados com sucesso!")
 
@@ -100,7 +108,9 @@ def handle_extract_pages(uploaded_file):
 
         with st.spinner("Extraindo..."):
             try:
-                new_pdf = extract_pdf_pages(uploaded_file, page_selection)
+                new_pdf = extract_pdf_pages(
+                    uploaded_file, page_selection, normalize_a4=st.session_state.get("split_normalize_a4", False)
+                )
                 st.success("Páginas extraídas com sucesso!")
                 st.download_button(
                     label="⬇️ Baixar PDF Extraído",
@@ -119,7 +129,9 @@ def handle_split_pages(uploaded_file):
     if st.button("Dividir em Arquivos Individuais", type="primary"):
         with st.spinner("Dividindo..."):
             try:
-                zip_bytes = split_pdf_to_zip(uploaded_file)
+                zip_bytes = split_pdf_to_zip(
+                    uploaded_file, normalize_a4=st.session_state.get("split_normalize_a4", False)
+                )
                 st.success("PDF dividido com sucesso!")
                 st.download_button(
                     label="⬇️ Baixar ZIP com Páginas",
@@ -146,6 +158,13 @@ def render_split_extract_tab():
         return
 
     st.write(f"📄 **Arquivo selecionado:** {uploaded_single.name}")
+
+    normalize_a4 = st.checkbox(
+        "Normalizar para A4 📏",
+        value=False,
+        help="Ajusta as páginas resultantes para o tamanho A4.",
+        key="split_normalize_a4",
+    )
 
     mode = st.radio(
         "Selecione a ação:", ["Extrair Páginas Específicas", "Dividir Todas as Páginas"]
