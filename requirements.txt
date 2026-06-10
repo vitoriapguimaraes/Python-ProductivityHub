@@ -22,3 +22,7 @@ openai>=1.0.0
 
 # OCR de Imagens Local e Offline
 easyocr>=1.7.0
+
+# SDK de IA do Google (Gemini Grátis)
+google-generativeai>=0.3.0
+

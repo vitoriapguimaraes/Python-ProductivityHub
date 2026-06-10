@@ -1,8 +1,9 @@
 import streamlit as st
-from utils.ui import render_footer
+from utils.ui import render_footer, apply_global_style
 
 # Configuração da página
 st.set_page_config(page_title="Utilitários Consolidados", page_icon="🛠️", layout="wide")
+apply_global_style()
 
 st.title("🛠️ Utilitários Consolidados")
 st.markdown(
@@ -14,8 +15,8 @@ st.info(
 )
 
 st.page_link(
-    "pages/1_Manutencao_de_Arquivos_e_Pastas.py",
-    label="Arquivos e Pastas .......................................... Visualiza hierarquia e lista arquivos.",
+    "pages/1_Transcritor_de_Imagens.py",
+    label="Transcritor de Imagens (OCR) ............................... Extrai textos de imagens de forma local e offline.",
     use_container_width=True,
 )
 st.page_link(
@@ -34,33 +35,38 @@ st.page_link(
     use_container_width=True,
 )
 st.page_link(
-    "pages/5_Transcritor_de_Audio.py",
-    label="Transcritor de Áudio ....................................... Transcreve áudio e gera resumos com IA.",
-    use_container_width=True,
-)
-st.page_link(
-    "pages/6_Doc_para_MD.py",
-    label="Conversor DOCX → MD ........................................ Converte Word para Markdown.",
-    use_container_width=True,
-)
-st.page_link(
-    "pages/7_MD_para_PDF.py",
-    label="Conversor MD → PDF .......................................... Converte Markdown para PDF usando LaTeX.",
-    use_container_width=True,
-)
-st.page_link(
-    "pages/8_Recortador_de_Rostos.py",
-    label="Recortador de Rostos ....................................... Detecta, recorta e remove fundo de rostos.",
-    use_container_width=True,
-)
-st.page_link(
-    "pages/9_Remover_Fundo_PB.py",
+    "pages/5_Remover_Fundo_PB.py",
     label="Removedor de Fundo P&B ..................................... Remove fundos claros de desenhos e assinaturas.",
     use_container_width=True,
 )
 st.page_link(
-    "pages/10_Transcritor_de_Imagens.py",
-    label="Transcritor de Imagens (OCR) ............................... Extrai textos de imagens de forma local e offline.",
+    "pages/6_Recortador_de_Rostos.py",
+    label="Recortador de Rostos ....................................... Detecta, recorta e remove fundo de rostos.",
+    use_container_width=True,
+)
+st.page_link(
+    "pages/7_Doc_para_MD.py",
+    label="Conversor DOCX → MD ........................................ Converte Word para Markdown.",
+    use_container_width=True,
+)
+st.page_link(
+    "pages/8_MD_para_PDF.py",
+    label="Conversor MD → PDF .......................................... Converte Markdown para PDF usando LaTeX.",
+    use_container_width=True,
+)
+st.page_link(
+    "pages/9_Manutencao_de_Arquivos_e_Pastas.py",
+    label="Manutenção de Arquivos e Pastas ............................ Visualiza hierarquia e lista arquivos.",
+    use_container_width=True,
+)
+st.page_link(
+    "pages/10_Transcritor_de_Audio.py",
+    label="Transcritor de Áudio ....................................... Transcreve áudio e gera resumos com IA.",
+    use_container_width=True,
+)
+st.page_link(
+    "pages/11_Acessibilidade_de_Fotos.py",
+    label="Acessibilidade e Classificação de Fotos .................... Mapeia alt-text e voluntários para site/livro.",
     use_container_width=True,
 )
 

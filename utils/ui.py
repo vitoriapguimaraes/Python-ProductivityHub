@@ -76,13 +76,120 @@ def render_file_uploader(
     return uploaded_files
 
 
+def apply_global_style():
+    """
+    Injeta o CSS de design premium global para todo o app no início da execução da página.
+    """
+    st.markdown("""
+    <style>
+        /* Importar fonte moderna Inter do Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        /* Aplicar fonte a todo o app */
+        html, body, [class*="css"], .stMarkdown, p, h1, h2, h3, h4, h5, h6 {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+        
+        /* Estilo de fundo do app escuro e suave */
+        .stApp {
+            background-color: #0b0c10 !important;
+            color: #c5c6c7 !important;
+        }
+        
+        /* Customização da Sidebar */
+        section[data-testid="stSidebar"] {
+            background-color: #0d0e12 !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+        }
+        
+        /* Cards Premium com Efeito de Vidro (Glassmorphism) */
+        .custom-card, div[data-testid="stExpander"] {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(255, 255, 255, 0.06) !important;
+            border-radius: 12px !important;
+            padding: 18px !important;
+            margin-bottom: 15px !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+            transition: all 0.25s ease-in-out !important;
+        }
+        .custom-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(26, 115, 232, 0.3) !important;
+            box-shadow: 0 8px 30px rgba(26, 115, 232, 0.08) !important;
+        }
+        
+        /* Botões customizados */
+        div.stButton > button {
+            border-radius: 8px !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            padding: 6px 18px !important;
+            font-weight: 500 !important;
+            background-color: rgba(255, 255, 255, 0.03) !important;
+            transition: all 0.2s ease-in-out !important;
+        }
+        div.stButton > button:hover {
+            background-color: rgba(26, 115, 232, 0.1) !important;
+            border-color: #1a73e8 !important;
+            color: #1a73e8 !important;
+            box-shadow: 0 0 12px rgba(26, 115, 232, 0.2) !important;
+        }
+        
+        /* Botões primários */
+        div.stButton > button[kind="primary"] {
+            background-color: #1a73e8 !important;
+            color: white !important;
+            border: none !important;
+        }
+        div.stButton > button[kind="primary"]:hover {
+            background-color: #1557b0 !important;
+            box-shadow: 0 0 15px rgba(26, 115, 232, 0.4) !important;
+        }
+        
+        /* Badges de Status reutilizáveis */
+        .status-badge {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .status-mapped {
+            background-color: rgba(46, 125, 50, 0.15) !important;
+            color: #81c784 !important;
+            border: 1px solid rgba(76, 175, 80, 0.3) !important;
+        }
+        .status-pending {
+            background-color: rgba(239, 108, 0, 0.15) !important;
+            color: #ffb74d !important;
+            border: 1px solid rgba(255, 152, 0, 0.3) !important;
+        }
+        
+        /* Inputs e Text Areas */
+        div[data-baseweb="input"], div[data-baseweb="textarea"] {
+            background-color: rgba(255, 255, 255, 0.01) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: 8px !important;
+        }
+        
+        /* Ajuste fino da área principal */
+        .block-container {
+            max-width: 95% !important;
+            padding-top: 1.5rem !important;
+            padding-bottom: 1.5rem !important;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
+
 def render_footer():
     """
     Renderiza o footer minimalista na página principal e na sidebar.
     """
     footer_html = """
-    <div style="text-align: center; color: #888; font-size: 14px; margin-top: 20px;">
-        Desenvolvido por <a href="https://github.com/vitoriapguimaraes" target="_blank" style="color: #888; text-decoration: none;">github.com/vitoriapguimaraes</a>
+    <div style="text-align: center; color: #666; font-size: 12px; margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
+        Desenvolvido por <a href="https://github.com/vitoriapguimaraes" target="_blank" style="color: #888; text-decoration: none; font-weight: 500;">github.com/vitoriapguimaraes</a>
     </div>
     """
     st.sidebar.markdown(footer_html, unsafe_allow_html=True)
