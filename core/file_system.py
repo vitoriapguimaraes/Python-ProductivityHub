@@ -47,6 +47,29 @@ def get_file_icon(name, is_dir):
     return icons.get(ext, "📄 ")
 
 
+def _format_node(path, use_icons):
+    name = os.path.basename(path)
+    if use_icons:
+        icon = get_file_icon(name, os.path.isdir(path))
+        return f"{icon}{name}"
+    elif os.path.isdir(path):
+        return f"{name}/"
+    return name
+
+
+def _get_tree_children(path, max_items):
+    try:
+        items = sorted(os.listdir(path))
+        original_count = len(items)
+        has_hidden = False
+        if original_count > max_items:
+            items = items[:max_items]
+            has_hidden = True
+        return items, original_count, has_hidden
+    except PermissionError:
+        return None, 0, False
+
+
 def get_tree_structure(
     path,
     prefix="",
@@ -68,59 +91,38 @@ def get_tree_structure(
         if current_depth == 0 and not os.path.exists(path):
             return ["❌ Caminho não encontrado."]
 
-        name = os.path.basename(path)
-        display_name = name
-
-        if use_icons:
-            icon = get_file_icon(name, os.path.isdir(path))
-            display_name = f"{icon}{name}"
-        elif os.path.isdir(path):
-            display_name += "/"
-
+        display_name = _format_node(path, use_icons)
         connector = "└── " if is_last else "├── "
         output_list.append(prefix + connector + display_name)
 
-        if os.path.isdir(path):
-            if current_depth >= max_depth:
-                return output_list
+        if not os.path.isdir(path) or current_depth >= max_depth:
+            return output_list
 
-            try:
-                items = sorted(os.listdir(path))
-                original_count = len(items)
+        items, original_count, has_hidden = _get_tree_children(path, max_items)
+        new_prefix = prefix + ("    " if is_last else "│   ")
 
-                has_hidden = False
-                if original_count > max_items:
-                    items = items[:max_items]
-                    has_hidden = True
+        if items is None:
+            output_list.append(new_prefix + "⛔ [Acesso Negado]")
+            return output_list
 
-                new_prefix = prefix + ("    " if is_last else "│   ")
+        for i, item in enumerate(items):
+            full_path = os.path.join(path, item)
+            is_last_item = (i == len(items) - 1) and not has_hidden
 
-                for i, item in enumerate(items):
-                    full_path = os.path.join(path, item)
-                    # If we have hidden items, the last visible item is NOT the last semantically
-                    is_last_item = (i == len(items) - 1) and not has_hidden
+            get_tree_structure(
+                full_path,
+                new_prefix,
+                is_last_item,
+                output_list,
+                current_depth + 1,
+                max_depth,
+                max_items,
+                use_icons,
+            )
 
-                    get_tree_structure(
-                        full_path,
-                        new_prefix,
-                        is_last_item,
-                        output_list,
-                        current_depth + 1,
-                        max_depth,
-                        max_items,
-                        use_icons,
-                    )
-
-                if has_hidden:
-                    remaining = original_count - max_items
-                    output_list.append(
-                        new_prefix + f"... e mais {remaining} itens ocultos"
-                    )
-
-            except PermissionError:
-                output_list.append(
-                    prefix + ("    " if is_last else "│   ") + "⛔ [Acesso Negado]"
-                )
+        if has_hidden:
+            remaining = original_count - max_items
+            output_list.append(f"{new_prefix}... e mais {remaining} itens ocultos")
 
     except PermissionError:
         output_list.append(prefix + "    ⛔ [Acesso Negado]")

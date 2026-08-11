@@ -109,7 +109,9 @@ def handle_extract_pages(uploaded_file):
         with st.spinner("Extraindo..."):
             try:
                 new_pdf = extract_pdf_pages(
-                    uploaded_file, page_selection, normalize_a4=st.session_state.get("split_normalize_a4", False)
+                    uploaded_file,
+                    page_selection,
+                    normalize_a4=st.session_state.get("split_normalize_a4", False),
                 )
                 st.success("Páginas extraídas com sucesso!")
                 st.download_button(
@@ -130,7 +132,8 @@ def handle_split_pages(uploaded_file):
         with st.spinner("Dividindo..."):
             try:
                 zip_bytes = split_pdf_to_zip(
-                    uploaded_file, normalize_a4=st.session_state.get("split_normalize_a4", False)
+                    uploaded_file,
+                    normalize_a4=st.session_state.get("split_normalize_a4", False),
                 )
                 st.success("PDF dividido com sucesso!")
                 st.download_button(
@@ -158,13 +161,6 @@ def render_split_extract_tab():
         return
 
     st.write(f"📄 **Arquivo selecionado:** {uploaded_single.name}")
-
-    normalize_a4 = st.checkbox(
-        "Normalizar para A4 📏",
-        value=False,
-        help="Ajusta as páginas resultantes para o tamanho A4.",
-        key="split_normalize_a4",
-    )
 
     mode = st.radio(
         "Selecione a ação:", ["Extrair Páginas Específicas", "Dividir Todas as Páginas"]

@@ -1,6 +1,6 @@
 import cv2
-import numpy as np
 from PIL import Image
+
 
 def remover_fundo_pb(input_path, output_path):
     # Carregar a imagem com OpenCV
@@ -27,15 +27,28 @@ def remover_fundo_pb(input_path, output_path):
 
     # Salvar usando PIL para garantir compatibilidade e qualidade máxima de PNG
     # OpenCV usa BGRA, PIL usa RGBA. Vamos inverter manualmente ou usar a constante correta
-    final_img = Image.fromarray(cv2.cvtColor(dst, cv2.COLOR_BGRA_RGBA if hasattr(cv2, 'COLOR_BGRA_RGBA') else cv2.COLOR_BGRA2RGBA))
-    
+    final_img = Image.fromarray(
+        cv2.cvtColor(
+            dst,
+            (
+                cv2.COLOR_BGRA_RGBA
+                if hasattr(cv2, "COLOR_BGRA_RGBA")
+                else cv2.COLOR_BGRA2RGBA
+            ),
+        )
+    )
+
     # Recortar as bordas vazias (opcional, mas ajuda no encaixe)
     bbox = final_img.getbbox()
     if bbox:
         final_img = final_img.crop(bbox)
-        
+
     final_img.save(output_path, "PNG", optimize=True)
     print(f"Sucesso! Imagem salva em: {output_path}")
 
+
 if __name__ == "__main__":
-    remover_fundo_pb('/home/ubuntu/upload/MINI_CRAQUE_DA_SELEÇÃO.webp', '/home/ubuntu/mini_craque_qualidade_maxima.png')
+    remover_fundo_pb(
+        "/home/ubuntu/upload/MINI_CRAQUE_DA_SELEÇÃO.webp",
+        "/home/ubuntu/mini_craque_qualidade_maxima.png",
+    )

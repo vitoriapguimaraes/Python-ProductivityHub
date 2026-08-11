@@ -80,7 +80,8 @@ def apply_global_style():
     """
     Injeta o CSS de design premium global para todo o app no início da execução da página.
     """
-    st.markdown("""
+    st.markdown(
+        """
     <style>
         /* Importar fonte moderna Inter do Google Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -180,7 +181,9 @@ def apply_global_style():
             padding-bottom: 1.5rem !important;
         }
     </style>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
 
 def render_footer():

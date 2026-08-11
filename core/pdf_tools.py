@@ -22,11 +22,11 @@ def merge_pdf_bytes(pdf_files, normalize_a4=False):
         merger.write(output_buffer)
         merger.close()
         output_buffer.seek(0)
-        
+
         pdf_bytes = output_buffer.getvalue()
         if normalize_a4:
             pdf_bytes = normalize_pdf_to_a4(pdf_bytes)
-            
+
         return pdf_bytes
     except Exception as e:
         raise Exception(f"Erro na unificação: {str(e)}")
@@ -154,11 +154,11 @@ def extract_pdf_pages(pdf_file, page_selection, normalize_a4=False):
         output_buffer = io.BytesIO()
         writer.write(output_buffer)
         output_buffer.seek(0)
-        
+
         pdf_bytes = output_buffer.getvalue()
         if normalize_a4:
             pdf_bytes = normalize_pdf_to_a4(pdf_bytes)
-            
+
         return pdf_bytes
 
     except Exception as e:
