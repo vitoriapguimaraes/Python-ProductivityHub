@@ -1,37 +1,39 @@
 # Utilitários Consolidados
 
-> Uma aplicação unificada em Streamlit que reúne diversas ferramentas essenciais para automação de tarefas diárias, como manipulação de PDFs, gerenciamento de arquivos e transcrição de áudio com IA.
+> Uma aplicação unificada em Streamlit que reúne diversas ferramentas essenciais para automação de tarefas diárias, como manipulação de PDFs, OCR, edição de imagens, gerenciamento de arquivos e transcrição de áudio com IA.
 
 ![Demonstração do sistema](https://github.com/vitoriapguimaraes/productivityHub/blob/main/demo/navigation.gif)
 
-## Funcionalidades Principais
+## 🚀 Funcionalidades Principais
 
-- **📁 Visualizador de Estrutura de Pastas**: Visualização hierárquica de diretórios para fácil entendimento da organização de projetos.
-- **📄 Listador de Arquivos**: Geração de listas textuais de arquivos em diretórios, exportáveis para TXT.
-- **🔗 Unificador de PDFs**: Combinação simples e rápida de múltiplos arquivos PDF em um único documento.
-- **🖼️ Conversor de PDF para Imagem**: Transformação de páginas de PDF em imagens (PNG/JPEG) com ajuste de resolução.
-- **🖼️ Redimensionador de Imagens**: Ferramenta prática para redimensionamento em lote (Batch Resize).
-- **🎤 Transcritor de Áudio e Resumo**: Transcrição de arquivos de áudio utilizando o modelo Whisper da OpenAI e geração de resumos inteligentes com GPT-4o.
-- **📝 Conversor de DOCX para MD**: Conversão de arquivos DOCX para Markdown (.md) com ajuda do Pandoc.
+- **🔍 Transcritor de Imagens (OCR)**: Extrai texto de fotos, documentos ou prints localmente e offline.
+- **📄 Editor de PDFs**: Unifica vários PDFs, extrai páginas específicas ou separa todas as páginas individualmente.
+- **🖼️ PDF para Imagem**: Converte páginas de arquivos PDF em imagens (PNG/JPEG) com ajuste de resolução.
+- **📐 Redimensionador de Imagens**: Redimensionamento rápido de imagens em lote.
+- **✨ Removedor de Fundo P&B**: Remove o fundo de desenhos ou assinaturas preto e branco, deixando a imagem transparente.
+- **👤 Recortador de Rostos**: Detecta rostos automaticamente usando IA e os recorta, removendo fundos.
+- **📝 Conversor DOCX → MD**: Converte arquivos de texto do Word para o formato Markdown.
+- **📑 Conversor MD → PDF**: Compila relatórios Markdown para PDF utilizando LaTeX.
+- **📁 Manutenção de Arquivos e Pastas**: Visualização hierárquica (em árvore) de diretórios e lista completa de arquivos exportável para TXT.
+- **🎤 Transcritor de Áudio**: Transcrição rápida de áudio usando OpenAI Whisper com geração automática de resumo via GPT.
 
-## Tecnologias Utilizadas
+## 🛠️ Tecnologias Utilizadas
 
-- **Interface**: [Streamlit](https://streamlit.io/)
+- **Interface**: [Streamlit](https://streamlit.io/), [pywebview](https://pywebview.flowrl.com/) (Desktop Wrapper)
 - **Linguagem**: [Python](https://www.python.org/)
 - **Manipulação de PDF**: [PyPDF2](https://pypi.org/project/PyPDF2/), [PyMuPDF (fitz)](https://pymupdf.readthedocs.io/)
-- **Processamento de Imagem**: [Pillow](https://python-pillow.org/)
+- **Processamento de Imagem**: [Pillow](https://python-pillow.org/), OpenCV, Rembg, EasyOCR
 - **Inteligência Artificial**: [OpenAI API](https://platform.openai.com/), [Groq API](https://groq.com/)
-- **Dados & Visualização**: [Pandas](https://pandas.pydata.org/), [Plotly](https://plotly.com/)
+- **Dados & Visualização**: [Pandas](https://pandas.pydata.org/), Plotly
 - **Gerenciamento de Ambiente**: [python-dotenv](https://pypi.org/project/python-dotenv/)
 
 ### Dependências do Sistema
 
-Para utilizar a ferramenta de **Conversor DOCX → MD**, é necessário instalar o **Pandoc**:
+- **Pandoc** (Obrigatório para o Conversor DOCX → MD):
+  - **Windows**: [Baixe o instalador .msi](https://pandoc.org/installing.html) e siga as instruções.
+  - **Verificação**: Execute `pandoc --version` no terminal.
 
-- **Windows**: [Baixe o instalador .msi](https://pandoc.org/installing.html) e siga as instruções.
-- **Verificação**: Execute `pandoc --version` no terminal.
-
-## Como Executar
+## 💻 Como Instalar
 
 1. **Clone o repositório:**
 
@@ -40,14 +42,11 @@ Para utilizar a ferramenta de **Conversor DOCX → MD**, é necessário instalar
    cd productivityHub
    ```
 
-2. **Crie e ative um ambiente virtual (recomendado):**
+2. **Crie e ative um ambiente virtual:**
 
    ```bash
-   python -m venv venv
-   # No Windows:
-   .\venv\Scripts\activate
-   # No Linux/Mac:
-   source venv/bin/activate
+   python -m venv .venv
+   .\.venv\Scripts\activate
    ```
 
 3. **Instale as dependências:**
@@ -57,48 +56,64 @@ Para utilizar a ferramenta de **Conversor DOCX → MD**, é necessário instalar
    ```
 
 4. **Configure as Variáveis de Ambiente:**
-   Crie um arquivo `.env` na raiz do projeto e adicione suas chaves:
-
+   Crie um arquivo `.env` na raiz do projeto e adicione sua chave (apenas para funcionalidades de Resumo e Áudio):
    ```bash
    OPENAI_API_KEY=sua-chave-openai
-   GROQ_API_KEY=sua-chave-groq
    ```
 
-5. **Execute o projeto:**
+## 🎮 Como Executar (Modos de Uso)
 
-   ```bash
-   streamlit run Home.py
-   ```
+O sistema foi estruturado para ser rodado como um utilitário fácil de usar no dia a dia. Você tem três opções:
 
-## Como Usar
+### Opção 1: Aplicativo Desktop (Recomendado)
 
-- Ao iniciar a aplicação, você verá uma página inicial com a visão geral.
-- Use a **barra lateral** à esquerda para navegar entre as diferentes ferramentas.
-- Cada ferramenta possui instruções específicas na própria interface.
+Abre o sistema em uma janela nativa do Windows, separada do seu navegador.
 
-## Estrutura de Diretórios
+```bash
+python run_app.py
+```
+
+### Opção 2: Serviço Oculto (Background)
+
+Roda o servidor silenciosamente (sem terminal visível). Basta dar duplo-clique no arquivo `iniciar_oculto.vbs` e acessar `http://localhost:8501` no navegador quando precisar usar o sistema.
+
+### Opção 3: Modo Desenvolvedor Streamlit Clássico
+
+```bash
+streamlit run Home.py
+```
+
+## 📂 Estrutura de Diretórios Reformulada
 
 ```bash
 /productivityHub
-├── .env                # Variáveis de ambiente (não versionado)
-├── requirements.txt    # Dependências do projeto
-├── README.md           # Documentação
-├── Home.py             # Ponto de entrada da aplicação
-├── assets/             # Recursos estáticos (capas, dados)
-├── utils/              # Módulos utilitários
+├── .env                    # Variáveis de ambiente
+├── requirements.txt        # Dependências do projeto
+├── README.md               # Documentação
+├── Home.py                 # Ponto de entrada
+├── run_app.py              # Carregador Desktop (App Window)
+├── iniciar_oculto.vbs      # Inicializador em background
+├── core/                   # 🧠 Regras de negócio e processamento pesado
 │   ├── audio_tools.py
 │   ├── file_system.py
 │   ├── image_tools.py
+│   ├── md_to_pdf.py
 │   ├── pdf_tools.py
+│   ├── process_faces.py
+│   └── remover_fundo_pb.py
+├── components/             # 🎨 UI Components
 │   └── ui.py
-└── pages/              # Páginas individuais das ferramentas
-    ├── 1_Estrutura_de_Pastas.py
-    ├── 2_Listador_de_Arquivos.py
-    ├── 3_Unificador_de_PDFs.py
-    ├── 4_PDF_para_Imagem.py
-    ├── 5_Redimensionador_Imagens.py
-    ├── 6_Transcritor_de_Audio.py
-    └── 7_Doc_para_MD.py
+└── pages/                  # 📄 Telas do Sistema (Views)
+    ├── 1_Transcritor_de_Imagens.py
+    ├── 2_Editor_de_PDFs.py
+    ├── 3_PDF_para_Imagem.py
+    ├── 4_Redimensionador_Imagens.py
+    ├── 5_Remover_Fundo_PB.py
+    ├── 6_Recortador_de_Rostos.py
+    ├── 7_Doc_para_MD.py
+    ├── 8_MD_para_PDF.py
+    ├── 9_Manutencao_de_Arquivos_e_Pastas.py
+    └── 10_Transcritor_de_Audio.py
 ```
 
 ## Status
