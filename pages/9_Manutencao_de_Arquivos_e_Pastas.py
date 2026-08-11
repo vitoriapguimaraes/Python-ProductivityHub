@@ -1,8 +1,8 @@
 import streamlit as st
 import os
 
-from utils.file_system import get_tree_structure, list_files_in_dir, get_default_path
-from utils.ui import render_footer, render_folder_selector
+from core.file_system import get_tree_structure, list_files_in_dir, get_default_path
+from components.ui import render_footer, render_folder_selector
 
 st.set_page_config(page_title="Arquivos e Pastas", page_icon="📁", layout="wide")
 st.title("📁 Manutenção de Arquivos e Pastas")

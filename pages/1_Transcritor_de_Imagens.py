@@ -1,9 +1,9 @@
 import streamlit as st
 import os
 from dotenv import load_dotenv
-from utils.ui import render_footer, render_file_uploader, apply_global_style
-from utils.image_tools import transcribe_image_easyocr
-from utils.audio_tools import generate_summary
+from components.ui import render_footer, render_file_uploader, apply_global_style
+from core.image_tools import transcribe_image_easyocr
+from core.audio_tools import generate_summary
 
 # Carregar variáveis de ambiente
 load_dotenv()

@@ -5,7 +5,7 @@ import tempfile
 import zipfile
 import io
 
-from utils.ui import render_file_uploader
+from components.ui import render_file_uploader
 
 
 def convert_single_docx(file_bytes, original_filename):

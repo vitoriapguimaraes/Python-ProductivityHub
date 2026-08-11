@@ -1,8 +1,8 @@
 import streamlit as st
 import os
 
-from utils.pdf_tools import convert_pdf_to_images
-from utils.ui import render_footer, render_file_uploader
+from core.pdf_tools import convert_pdf_to_images
+from components.ui import render_footer, render_file_uploader
 
 st.set_page_config(page_title="PDF para Imagem", page_icon="🖼️", layout="wide")
 st.title("🖼️ Conversor de PDF para Imagem")

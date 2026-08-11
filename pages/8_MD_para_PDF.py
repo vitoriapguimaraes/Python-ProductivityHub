@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import tempfile
 import pypandoc
-from utils.ui import render_footer
+from components.ui import render_footer
 
 st.set_page_config(page_title="Conversor MD → PDF", page_icon="📄", layout="wide")
 st.title("📄 Conversor Markdown → PDF")

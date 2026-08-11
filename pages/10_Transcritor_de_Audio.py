@@ -3,8 +3,8 @@ import os
 
 from dotenv import load_dotenv
 
-from utils.audio_tools import transcribe_audio_file, generate_summary
-from utils.ui import render_footer, render_file_uploader
+from core.audio_tools import transcribe_audio_file, generate_summary
+from components.ui import render_footer, render_file_uploader
 
 # Carregar env
 load_dotenv()

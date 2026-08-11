@@ -3,8 +3,8 @@ import streamlit as st
 import io
 import zipfile
 
-from utils.ui import render_footer, render_file_uploader
-from utils.image_tools import process_image_resize
+from components.ui import render_footer, render_file_uploader
+from core.image_tools import process_image_resize
 
 
 # --- HELPER FUNCTIONS ---

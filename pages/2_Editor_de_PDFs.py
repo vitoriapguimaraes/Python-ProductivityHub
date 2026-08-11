@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 
-from utils.pdf_tools import merge_pdf_bytes, extract_pdf_pages, split_pdf_to_zip
-from utils.ui import render_footer, render_file_uploader
+from core.pdf_tools import merge_pdf_bytes, extract_pdf_pages, split_pdf_to_zip
+from components.ui import render_footer, render_file_uploader
 
 st.set_page_config(page_title="Ferramentas de PDF", page_icon="🔗", layout="wide")
 st.title("🔗 Ferramentas de PDF")

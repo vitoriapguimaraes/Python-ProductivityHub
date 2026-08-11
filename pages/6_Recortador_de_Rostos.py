@@ -1,8 +1,8 @@
 import streamlit as st
 import io
 import zipfile
-from utils.ui import render_footer, render_file_uploader, apply_global_style
-from utils.image_tools import process_single_face_crop
+from components.ui import render_footer, render_file_uploader, apply_global_style
+from core.image_tools import process_single_face_crop
 
 st.set_page_config(page_title="Recortador de Rostos", page_icon="👤", layout="wide")
 apply_global_style()

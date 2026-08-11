@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.ui import render_footer, apply_global_style
+from components.ui import render_footer, apply_global_style
 
 # Configuração da página
 st.set_page_config(page_title="Utilitários Consolidados", page_icon="🛠️", layout="wide")
@@ -64,12 +64,5 @@ st.page_link(
     label="Transcritor de Áudio ....................................... Transcreve áudio e gera resumos com IA.",
     use_container_width=True,
 )
-st.page_link(
-    "pages/11_Acessibilidade_de_Fotos.py",
-    label="Acessibilidade e Classificação de Fotos .................... Mapeia alt-text e voluntários para site/livro.",
-    use_container_width=True,
-)
-
-
 
 render_footer()
